@@ -1,0 +1,61 @@
+{% extends "studserviceapp/base_administrator.html" %}
+
+{% block title %}Ispravite greske{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid pt-2 px-2">
+        <label>Ovi redovi nisu uspesno uneti u bazu:</label>
+        {% for l, p in zipovano %}
+        {% for key, value in l.items %}
+        <form action="{% url 'addklksuccess' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{key}}
+            <input name="{{forloop.parentloop.counter}}{{forloop.counter}}{{key}}" value="{{value}}">
+
+
+            {% endfor %}
+            <label>{{p}}
+            </label>
+            <br>
+
+            {% endfor %}
+            <input type="hidden" name="broj" value="{{ broj }}"/>
+            <input type="submit" value="Sacuvaj">
+        </form>
+        <form action="{% url 'addkolok' %}" method="get">
+            {% csrf_token %}
+            <br><br>
+            <input type="submit" value="Nazad">
+        </form>
+    </div>
+{% endblock %}

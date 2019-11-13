@@ -1,0 +1,79 @@
+{% extends "studserviceapp/base_nastavnik.html" %}
+
+{% block title %}Slika studenta{% endblock %}
+
+{% block navbar %}
+    {% if uloga == 'nastavnik' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'prikazCelogRasporeda' %}">Raspored nastave</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'profesorPregled' username%}">Spisak studenata <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+        </li>
+    {% endif %}
+    {% if uloga == 'sekretar' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+        </li>
+    {% endif %}
+    {% if uloga == 'administrator' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid pt-2">
+        <img src="{{ slika }}">
+    </div>
+{% endblock %}
+

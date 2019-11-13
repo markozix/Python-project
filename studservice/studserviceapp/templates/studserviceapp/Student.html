@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Prikaz za studenta</title>
+
+
+    <style>
+
+        .navbar {
+           list-style-type: none;
+           margin: 0;
+           padding: 0;
+           overflow: hidden;
+           background-color: #333;
+        }
+         .lii {
+            float: left;
+         }
+
+         .lii a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+         }
+
+         .lii a:hover {
+            background-color: #111;
+         }
+    </style>
+
+
+
+</head>
+<body>
+    <header>
+        <ul class="navbar">
+            <li class="lii"><a href="http://localhost:8000/studserviceapp/student/{{ username }}">Pocetna</a></li>
+            <li class="lii"><a href="http://localhost:8000/studserviceapp/chooseagroup/{{ username }}">Izbor grupe</a></li>
+            <li class="lii"><a href="http://localhost:8000/studserviceapp/prikazStudentaZaUploadSlike/{{ username }}">Upload sliku</a></li>
+        </ul>
+    </header>
+</body>
+</html>

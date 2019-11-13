@@ -1,0 +1,118 @@
+{% extends "studserviceapp/base_nastavnik.html" %}
+
+{% block title %}Nastavnik{% endblock %}
+
+{% block navbar %}
+    {% if uloga == 'nastavnik' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'prikazCelogRasporeda' %}">Raspored nastave</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username%}">Spisak studenata</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+        </li>
+    {% endif %}
+    {% if uloga == 'sekretar' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla  <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+        </li>
+    {% endif %}
+    {% if uloga == 'administrator' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla  <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid pt-2">
+        {% if admin %}
+            <form action="{% url 'sendmail' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label>Mail korisnika</label>
+                <input type="text" name="mejl" value="{{ mail }}" readonly><br><br>
+                <label>Mail za</label>
+                <select name="cilj" size="10" readonly="">
+                    {% for l in lista %}
+                        <option value="{{ l }}">{{ l }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <label>Subject</label>
+                <input type="text" name="subject"><br><br>
+                <label>Tekst</label>
+                <textarea name="tekst" rows="4" cols="50"></textarea><br><br>
+                <label>Attachment</label>
+                <input type="file" name="attachment" id="attachment"><br><br>
+                <input type="submit" value="Posalji">
+            </form>
+        {% else %}
+            <form action="{% url 'sendmail' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label>Ime i prezime profesora</label>
+                <input type="text" name="ime_prezime" value="{{ imeprezime }}" readonly><br><br>
+                <label>Mail profesora</label>
+                <input type="text" name="mejl" value="{{ mail }}" readonly><br><br>
+                <label>Mail za</label>
+                <select name="cilj" size="10" readonly="">
+                    {% for l in lista %}
+                        <option value="{{ l }}">{{ l }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <label>Subject</label>
+                <input type="text" name="subject"><br><br>
+                <label>Tekst</label>
+                <textarea name="tekst" rows="4" cols="50"></textarea><br><br>
+                <label>Attachment</label>
+                <input type="file" name="attachment" id="attachment"><br><br>
+                <input type="submit" value="Posalji">
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

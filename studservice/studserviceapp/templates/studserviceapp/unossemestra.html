@@ -1,0 +1,49 @@
+{% extends "studserviceapp/base.html" %}
+
+{% block title %}Unos semestra{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid pt-2 px-2">
+        <form action="{% url 'allsemesters' %}" method="post">
+            {% csrf_token %}
+            <label>Vrsta semestra:</label>
+            <input type="text" name="vrsta_semestra"><br><br>
+            <label>Skolska godina pocetak:</label>
+            <input type="number" name="skolska_godina_pocetak"><br><br>
+            <label>Skolska godina kraj:</label>
+            <input type="number" name="skolska_godina_kraj"><br><br>
+            <br><br>
+            <input type="submit" value="Dodaj semestar">
+        </form>
+    </div>
+{% endblock %}

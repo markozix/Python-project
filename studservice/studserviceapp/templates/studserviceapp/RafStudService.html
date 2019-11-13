@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RafStudService</title>
+    <script>
+        function prikaziStranicu() {
+           username = document.getElementById("username").value;
+           pass = document.getElementById("password").value;
+
+           if(username == ""){
+                alert("Unesite korisnicko ime");
+           }else if (pass == ""){
+                alert("Niste unijeli sifru!");
+           }else{
+                window.location.href = "http://localhost:8000/studserviceapp/timetable/" + username;
+            }
+        }
+    </script>
+    <style>
+
+        .btnLogIn {
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .table {
+            border: 1px solid black;
+
+        }
+
+        th,td {
+           padding: 15px;
+        }
+
+    </style>
+
+</head>
+<body>
+<h3 style="text-align:center; padding: 20px">Za prijavu na studentski servis koristite username i passowrd koji<br>
+    koristite i za logovanje na racunare u ucionicama.</h3>
+<form>
+    <table class="table" align="center">
+
+        <tr>
+            <td>
+                Username:
+            </td>
+
+            <td>
+                 <input type="text", name="username", id="username">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                Password:
+            </td>
+
+            <td>
+                 <input type="password", name="password", id="password">
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <button type="button" class="btnLogIn" onclick="prikaziStranicu()"> Prijava </button>
+            </td>
+        </tr>
+
+    </table>
+</form>
+
+</body>
+</html>

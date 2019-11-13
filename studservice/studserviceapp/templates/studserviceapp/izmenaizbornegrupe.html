@@ -1,0 +1,63 @@
+{% extends "studserviceapp/base.html" %}
+
+{% block title %}Izmena izborne grupe{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid pt-2 px-2">
+        <form action="{% url 'groupsforsemester' semestar.id %}" method="post">
+            {% csrf_token %}
+            <label>Oznaka grupe:</label>
+            <input type="number" name="oznaka_grupe" value="{{ izborna_grupa.oznaka_grupe }}" readonly><br><br>
+            <label>Oznaka semestra:</label>
+            <input type="number" name="oznaka_semestra" value="{{ izborna_grupa.oznaka_semestra }}" readonly><br><br>
+            <label>Kapacitet grupe:</label>
+            <input type="number" name="kapacitet" value="{{ izborna_grupa.kapacitet }}"><br><br>
+            <label>Smer:</label>
+            <input type="text" name="smer" value="{{ izborna_grupa.smer }}" readonly><br><br>
+            {% if izborna_grupa.aktivna %}
+                <input type="checkbox" name="aktivna" checked>Aktivna<br><br>
+            {% else %}
+                <input type="checkbox" name="aktivna" >Aktivna<br><br>
+            {% endif %}
+            <input type="hidden" name="izborna_grupa_id" value="{{ izborna_grupa.id }}">
+            <label>Predmeti:</label>
+            <select name="predmeti" multiple="multiple" size="10" readonly>
+                {% for p in predmeti %}
+                <option value="{{ p.id }}">{{ p }}</option>
+                {% endfor %}
+            </select>
+            <br><br>
+            <input type="submit" value="Sacuvaj izmene">
+        </form>
+    </div>
+{% endblock %}

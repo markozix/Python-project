@@ -1,0 +1,119 @@
+{% extends "studserviceapp/base.html" %}
+
+{% block title %}Unos izborne grupe{% endblock %}
+
+{% block navbar %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa <span class="sr-only">(current)</span></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+</li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid pt-2 px-2">
+    <button onclick="myFunction()">Dodatna grupa</button>
+    <form id="forma" action="{% url 'groupsforsemester' semestar.id %}" method="post">
+        {% csrf_token %}
+        <label>Oznaka grupe:</label>
+        <input type="number" name="oznaka_grupe">
+        <div id="mesto1"></div>
+        <br><br>
+
+        <label>Kapacitet grupe:</label>
+        <input type="number" name="kapacitet">
+        <div id="mesto2"></div>
+        <br><br>
+
+        <label>Smer grupe:</label>
+        <input type="text" name="smer">
+        <div id="mesto3"></div>
+        <br><br>
+
+        <label>Oznaka semestra:</label>
+        <input type="number" name="oznaka_semestra"><br><br>
+
+        <input type="checkbox" name="aktivna" value=True checked>Aktivna<br><br>
+        <!-- <input type="hidden" name="za_semestar" value="{{ semestar }}"> -->
+        <label>Predmeti:</label>
+        <select name="predmeti" multiple="multiple" size="10">
+            {% for p in predmeti %}
+            <option value="{{ p.id }}">{{ p }}</option>
+            {% endfor %}
+        </select>
+
+        <script>
+            function myFunction() {
+                counter++;
+
+                var t1 = document.createElement("INPUT");
+                t1.id = "oznaka"+counter;
+                t1.name = "oznaka"+counter;
+                t1.type = "number";
+
+                var l1 = document.createElement("LABEL");
+                l1.innerHTML = "Oznaka grupe "+counter+":";
+                document.getElementById("mesto1").appendChild(l1);
+                document.getElementById("mesto1").appendChild(t1);
+
+                var br1 = document.createElement("BR");
+                document.getElementById("mesto1").appendChild(br1);
+
+                var t2 = document.createElement("INPUT");
+                t2.id = "kapacitet"+counter;
+                t2.name = "kapacitet"+counter;
+                t2.type = "number";
+
+                var l2 = document.createElement("LABEL");
+                l2.innerHTML = "Kapacitet grupe "+counter+":";
+                document.getElementById("mesto2").appendChild(l2);
+                document.getElementById("mesto2").appendChild(t2);
+
+                var br2 = document.createElement("BR");
+                document.getElementById("mesto2").appendChild(br2);
+
+                var t3 = document.createElement("INPUT");
+                t3.id = "smer"+counter;
+                t3.name = "smer"+counter;
+                t3.type = "text";
+
+                var l3 = document.createElement("LABEL");
+                l3.innerHTML = "Smer grupe "+counter+":";
+                document.getElementById("mesto3").appendChild(l3);
+                document.getElementById("mesto3").appendChild(t3);
+
+                 var br3 = document.createElement("BR");
+                document.getElementById("mesto3").appendChild(br3);
+            }
+             var counter=1;
+
+
+
+        </script>
+        <br><br>
+        <input type="submit" value="Dodaj grupu">
+    </form>
+</div>
+{% endblock %}

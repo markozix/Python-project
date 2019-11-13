@@ -1,0 +1,131 @@
+{% extends "studserviceapp/base_nastavnik.html" %}
+
+{% block title %}Detalji studenta{% endblock %}
+
+{% block navbar %}
+    {% if uloga == 'nastavnik' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'prikazCelogRasporeda' %}">Raspored nastave</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username%}">Spisak studenata</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata <span class="sr-only">(current)</span></a>
+        </li>
+    {% endif %}
+    {% if uloga == 'sekretar' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata  <span class="sr-only">(current)</span></a>
+        </li>
+    {% endif %}
+    {% if uloga == 'administrator' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata  <span class="sr-only">(current)</span></a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+    <table align="" cellpadding="5px">
+
+        <tr>
+            <td>
+                OstvarenoESPB:
+            </td>
+            <td>
+                {{ ost }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                UpisujeESPB
+            </td>
+            <td>
+                {{ upisuje }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Nacin placanja:
+            </td>
+            <td>
+                {{ np }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Upisuje semestar:
+            </td>
+            <td>
+                {{ us }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Izabrana grupa:
+            </td>
+            <td>
+                {{ izg }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Nepolozeni predmeti:
+            </td>
+            <td>
+                {% if nepolozeni %}
+                    {{ nepolozeni }}
+                {% endif %}
+            </td>
+        </tr>
+
+    </table>
+
+{% endblock %}

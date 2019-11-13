@@ -1,0 +1,67 @@
+{% extends "studserviceapp/base_student.html" %}
+
+{% block title %}Upload slike za studenta{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'prikazCelogRasporeda' %}">Raspored nastave</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'prikazStudentaZaUploadSlike' username %}">Upload slike  <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'chooseagroup' username %}">Izbor grupe</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'obradaSlike' %}" method="post" enctype="multipart/form-data" class="px-4 py-2">
+        {% csrf_token %}
+        <table>
+
+            <tr>
+                <td>
+                    Ime: {{ ime }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Prezime: {{ prezime }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Indeks: {{ smjer }} {{ brindeksa }}/{{ godupisa }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Grupa: {{ grupa }}
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    Izaberite sliku:
+                </td>
+                <td>
+                    <input name="slika" type="file" id="slika">
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <input value="Snimi" type="submit">
+                    <input type="hidden" name="username" value="{{ username }}">
+                </td>
+            </tr>
+
+        </table>
+    </form>
+{% endblock %}

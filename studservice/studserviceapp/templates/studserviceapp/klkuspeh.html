@@ -1,0 +1,39 @@
+{% extends "studserviceapp/base_administrator.html" %}
+
+{% block title %}Uspeh{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita <span class="sr-only">(current)</span></a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid pt-2 px-2">
+        <label>Uspeh!</label>
+    </div>
+{% endblock %}

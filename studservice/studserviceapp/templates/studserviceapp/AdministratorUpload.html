@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload</title>
+     <style>
+
+        .navbar {
+           list-style-type: none;
+           margin: 0;
+           padding: 0;
+           overflow: hidden;
+           background-color: #333;
+        }
+         .lii {
+            float: left;
+         }
+
+         .lii a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+         }
+
+         .lii a:hover {
+            background-color: #111;
+         }
+         th,td {
+           padding: 15px;
+        }
+
+        table {
+           padding-top: 30px;
+        }
+
+
+    </style>
+</head>
+<body>
+    <header>
+        <ul class="navbar">
+            <li class="lii"><a href="http://localhost:8000/studserviceapp/administrator/{{ username }}">Pocetna</a></li>
+            <li class="lii"><a href="http://localhost:8000/studserviceapp/administratorUpload/{{ username }}">Upload</a></li>
+            <li class="lii"><a href="#123">Obavjestenja</a></li>
+            <li class="lii"><a href="http://localhost:8000/studserviceapp/maillist/{{ username }}">Mail</a></li>
+            <li class="lii"><a href="http://localhost:8000/studserviceapp/allsemesters">Unos izbornih grupa</a></li>
+            <li class="lii"><a href="#112">Pregled izabranih grupa</a></li>
+            <li class="lii"><a href="http://localhost:8000/studserviceapp/viewgroups">Pregled studenata</a></li>
+        </ul>
+    </header>
+
+    <div>
+
+        <table>
+            <tr>
+                <td>
+                    <a href="http://localhost:8000/studserviceapp/addklk">Dodaj kolokvijumsku nedelju</a>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <a href="#dodajRaspored">Dodaj raspored</a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+
+
+
+</body>
+</html>

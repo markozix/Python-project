@@ -1,0 +1,113 @@
+{% extends "studserviceapp/base_nastavnik.html" %}
+
+{% block title %}Nastavnik{% endblock %}
+
+{% block navbar %}
+    {% if uloga == 'nastavnik' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'prikazCelogRasporeda' %}">Raspored nastave</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username%}">Spisak studenata</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata <span class="sr-only">(current)</span></a>
+        </li>
+    {% endif %}
+    {% if uloga == 'sekretar' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata  <span class="sr-only">(current)</span></a>
+        </li>
+    {% endif %}
+    {% if uloga == 'administrator' %}
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata</a>
+        </li>
+        <li class="nav-item active">
+            <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata  <span class="sr-only">(current)</span></a>
+        </li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <form action="{% url 'studentDetaljiObrada' %}" method="post">
+        {% csrf_token %}
+        <table align="center" cellpadding="5px">
+
+            <tr>
+                <td> Ime: </td>
+                <td> <input name="ime">  </td>
+            </tr>
+
+            <tr>
+                <td> Prezime: </td>
+                <td> <input name="prezime">  </td>
+            </tr>
+
+            <tr>
+                <td> Broj indeksa: </td>
+                <td> <input name="brIndeksa">  </td>
+            </tr>
+
+            <tr>
+                <td> Smjer: </td>
+                <td> <input name="smjer">  </td>
+            </tr>
+
+            <tr>
+                <td> Godina upisa: </td>
+                <td> <input name="godUpisa">  </td>
+            </tr>
+
+            <tr>
+                <td> </td>
+                <td> <input type="submit" value="Filtriraj">  </td>
+            </tr>
+
+        </table>
+
+
+    </form>
+{% endblock %}

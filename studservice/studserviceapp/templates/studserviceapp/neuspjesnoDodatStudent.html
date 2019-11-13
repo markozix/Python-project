@@ -1,0 +1,23 @@
+{% extends 'studserviceapp/base_student.html' %}
+
+{% block title %}Uspeh{% endblock %}
+
+{% block navbar %}
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'prikazCelogRasporeda' %}">Raspored nastave</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'prikazStudentaZaUploadSlike' username %}">Upload slike</a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{% url 'chooseagroup' username %}">Izbor grupe <span class="sr-only">(current)</span></a>
+    </li>
+{% endblock %}
+
+{% block content %}
+    <h1>Ne mozete ponovo birati grupu, obratite se sekretarijatu ako imate pitanja!</h1>
+{% endblock %}
+

@@ -1,0 +1,154 @@
+{% extends 'studserviceapp/base_student.html' %}
+
+{% block title %}Izbor grupe{% endblock %}
+
+{% block navbar %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'prikazCelogRasporeda' %}">Raspored nastave</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'prikazStudentaZaUploadSlike' username %}">Upload slike</a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'chooseagroup' username %}">Izbor grupe <span class="sr-only">(current)</span></a>
+</li>
+{% endblock %}
+
+{% block content %}
+{% if s %}
+<form action="{% url 'chooseagroupObrada' %}" method="post" class="px-2" name="formica">
+    {% csrf_token %}
+    <table>
+        <thead>
+        <tr>
+            <th>
+                Izbor grupe
+            </th>
+        </tr>
+        </thead>
+
+        <tbody>
+
+        <tr>
+            <td>Index</td>
+            <td name="prviDio" width="10px">
+                {{ s.smer}} {{ s.broj_indeksa}} {{ s.godina_upisa }}
+
+        </tr>
+        <tr>
+            <td>Ime</td>
+            <td name="imeStudenta"> {{s.ime}}</td>
+        </tr>
+        <tr>
+            <td>Prezime</td>
+            <td name="prezimeStudenta"> {{s.prezime}}</td>
+        </tr>
+        <tr>
+            <td>Broj od sada ukupno ostvarenih ESPB</td>
+            <td><input name="brOpoena"/></td>
+        </tr>
+        <tr>
+            <td>Skolske {{p}}/{{k}} godine upisujem ESPB</td>
+            <td><input name="brUpoena"/></td>
+        </tr>
+        <tr>
+            <td>Broj do sada polozenih ispita</td>
+            <td><input name="brPispita"/></td>
+        </tr>
+        <tr>
+            <td>Semestar</td>
+            <td>
+
+                <input id="jen" type="radio" name="radioBtn" value="{{ r1 }}" />{{ r1 }}
+                <input id="dva" type="radio" name="radioBtn" value="{{ r2 }}" />{{ r2 }}
+                <input id="tri" type="radio" name="radioBtn" value="{{ r3 }}" />{{ r3 }}
+                <input id="cetri" type="radio" name="radioBtn" value="{{ r4 }}" />{{ r4 }}
+
+            </td>
+        </tr>
+        <script>
+
+        var rad = document.formica.radioBtn;
+        for(var i = 0; i < rad.length; i++) {
+            rad[i].addEventListener('change', function() {
+                var id = this.value;
+                var grups = $("#grupeX")[0];
+                for( let i = 0; i < grups.length; i++) {
+                    if(grups[i].getAttribute('data-semestar') == id) {
+                        grups[i].style.display="list-item";
+                    } else {
+                        grups[i].style.display="none";
+                    }
+                }
+
+                var predmeti = $("#predmeti")[0];
+                for (let i = 0; i < predmeti.length; i++) {
+                    if(predmeti[i].getAttribute('data-semestar') < id && predmeti[i].getAttribute('data-semestar')%2 == id%2) {
+                        predmeti[i].style.display="list-item";
+                    } else {
+                        predmeti[i].style.display="none";
+                    }
+                }
+            });
+        }
+
+
+
+        </script>
+        <tr>
+            <td>Prvi put upisuje semestar</td>
+            <td>
+                <input type="radio" name="pp" id="pp1" value="prviPut"> Da
+                <input type="radio" name="pp" value="nijePrvi"> Ne
+            </td>
+        </tr>
+        <tr>
+            <td>Grupa koju student bira</td>
+            <td>
+
+                <select id="grupeX" name="grupeX" size="10">
+                    {% for g in grupe %}
+                    <option data-semestar="{{ g.oznaka_semestra }}"> {{g.oznaka_grupe}}  </option>
+                    {% endfor %}
+                </select>
+
+            </td>
+        </tr>
+        <tr>
+            <td>Nepolozeni predmeti iz prethodnih godina</td>
+            <td>
+                <select id="predmeti" name="predmeti" multiple="multiple" size="10">
+                    {% for p1 in predmeti %}
+                    <option data-semestar="{{p1.semestar_po_programu}}"value="{{ p1.id }}">{{ p1 }}</option>
+                    {% endfor %}
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td>Nacin placanja skolarine</td>
+            <td>
+                <input type="radio" name="np" value="odjednom"> Odjednom
+                <input type="radio" name="np" value="narate"> Na rate
+                <input type="radio" name="np" value="stipendista"> Stipendista
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" value="Sacuvaj"></td>
+        </tr>
+
+
+        </tbody>
+
+        <input type="hidden" name="username" value="{{ username }}"/>
+
+    </table>
+</form>
+{% else %}
+<p>Nema studenta u bazi</p>
+{% endif %}
+{% endblock %}
+

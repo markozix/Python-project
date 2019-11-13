@@ -1,0 +1,228 @@
+{% extends 'studserviceapp/base_nastavnik.html' %}
+
+{% block title %}Profesor pregled{% endblock %}
+
+{% block navbar %}
+{% if uloga == 'nastavnik' %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'prikazCelogRasporeda' %}">Raspored nastave</a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'profesorPregled' username%}">Spisak studenata <span
+            class="sr-only">(current)</span></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+</li>
+{% endif %}
+{% if uloga == 'sekretar' %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata <span
+            class="sr-only">(current)</span></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+</li>
+{% endif %}
+{% if uloga == 'administrator' %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'timetableforuser' username %}">Home</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'addRasporedPredavanja' %}">Upload rasporeda predavanja</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'addkolok' %}">Upload rasporeda kolokvijuma/ispita</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'unosObavestenja' %}">Unos obavestenja</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'maillist' username %}">Slanje mejla</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'allsemesters' %}">Unos izbornih grupa</a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'viewgroups' %}">Pregled izabranih grupa</a>
+</li>
+<li class="nav-item active">
+    <a class="nav-link" href="{% url 'profesorPregled' username %}">Spisak studenata <span
+            class="sr-only">(current)</span></a>
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'studentDetalji' %}">Pretraga studenata</a>
+</li>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid pt-2">
+    {% if uloga == 'nastavnik' %}
+    {% if predmetiNiz %}
+    <table style="float: left;">
+
+        <thead>
+        <tr>
+            {% if nastavnik %}
+            <th>{{ nastavnik }}</th>
+            {% else %}
+            <th>Sve grupe</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in predmetiNiz %}
+
+        <tr>
+
+            <td>
+                {{ p }}
+            </td>
+
+        </tr>
+
+        {% endfor %}
+        </tbody>
+    </table>
+    {% endif %}
+    {% if lista %}
+    <table style="float: left;">
+        <thead>
+        <tr>
+            {% if nastavnik %}
+            <th style="visibility: hidden;">{{ nastavnik }}</th>
+            {% else %}
+            <th style="visibility: hidden;">Sve grupe</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        {% for li in lista %}
+
+        <tr>
+            {% for l in li %}
+            <td></td>
+            <td>
+                <a href="ppStudenti/{{ l }}">{{ l }} </a>
+            </td>
+            {% endfor %}
+        </tr>
+
+        {% endfor %}
+        </tbody>
+
+    </table>
+    {% endif %}
+    {% else %}
+    <div class="col-2">
+        Godina:
+        <select id="izaberi1">
+            <option value="0">Sve</option>
+            <option value="1">Prva</option>
+            <option value="2">Druga</option>
+            <option value="3">Treca</option>
+            <option value="4">Cetvrta</option>
+        </select>
+        Smer:
+        <select id="izaberi2">
+            <option value="">Svi</option>
+            <option value="RN">RN</option>
+            <option value="RM">RM</option>
+        </select>
+        <ul class="list-group">
+            <div id="prikazGrupa">
+                {% for grupa in grupe %}
+                <a id="aa{{forloop.counter}}" god="{{grupa.godina}}" sme="{{grupa.smer}}" href="ppStudenti/{{ grupa }}">
+                    <li class="list-group-item">Grupa {{ grupa }}</li>
+                </a>
+                {% endfor %}
+            </div>
+
+        </ul>
+        <script>
+                    var g = 0;
+                    var s = "";
+                    document.getElementById("izaberi1").addEventListener("change", function(){
+                        var cnt = 1;
+                        g = this.value;
+                        console.log("prvi");
+                        var t = "aa"+cnt;
+                        console.log(t);
+                        while(1==1){
+                            var aa = document.getElementById("aa"+cnt);
+                            console.log(aa);
+                            if(aa) {
+                                var sme = aa.getAttribute('sme');
+                                var god = aa.getAttribute('god');
+                                console.log(g);
+                                console.log(god);
+                                console.log(s);
+                                console.log(sme);
+                                if(g == god || g == 0) {
+                                    if(s == sme || s == ""){
+                                        aa.style.display="block";
+                                    } else {
+                                        aa.style.display="none";
+                                    }
+                                } else {
+                                    aa.style.display="none";
+                                }
+                                cnt = cnt + 1;
+                            } else{
+                                break;
+                            }
+                        }
+                    });
+
+                    document.getElementById("izaberi2").addEventListener("change", function(){
+                        var cnt = 1;
+                        s = this.value;
+                        console.log("drugi");
+                        var t = "aa"+cnt;
+                        console.log(t);
+                        while(document.getElementById("aa"+cnt)){
+                            console.log("while2");
+                            var aa = document.getElementById("aa"+cnt);
+                            var sme = aa.getAttribute('sme');
+                            var god = aa.getAttribute('god');
+                            console.log(g);
+                            console.log(god);
+                            console.log(s);
+                            console.log(sme);
+                            if(g == god || g == 0) {
+                                if(s == sme || s == ""){
+                                    aa.style.display="block";
+                                } else {
+                                    aa.style.display="none";
+                                }
+                            } else {
+                                aa.style.display="none";
+                            }
+                            cnt = cnt + 1;
+                        }
+                    });
+
+        </script>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
